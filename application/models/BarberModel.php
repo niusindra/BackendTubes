@@ -3,16 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class UserModel extends CI_Model 
 { 
     private $table = 'users'; 
-    public $id; 
-    public $full_name; 
+    public $id; public $name; 
     public $email; 
     public $password; 
-    public $verified;
-    public $profile_pict;
     public $rule = [ 
         [ 
-            'field' => 'full_name', 
-            'label' => 'full_name', 
+            'field' => 'name', 
+            'label' => 'name', 
             'rules' => 'required' 
         ], 
     ]; 
@@ -23,10 +20,8 @@ class UserModel extends CI_Model
     // } 
     
     public function store($request) { 
-        $this->full_name = $request->full_name; 
+        $this->name = $request->name; 
         $this->email = $request->email; 
-        $this->verified = $request->verified;
-        $this->profile_pict = $request->profile_pict;
         $this->password = password_hash($request->password, PASSWORD_BCRYPT); 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
@@ -34,12 +29,7 @@ class UserModel extends CI_Model
         return ['msg'=>'Gagal','error'=>true]; 
     } 
     public function update($request,$id) { 
-        $updateData = [
-            'email' => $request->email, 
-            'full_name' =>$request->full_name,
-            'password' =>$request->password,
-            'profile_pict' =>$request->profile_pict
-        ]; 
+        $updateData = ['email' => $request->email, 'name' =>$request->name]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 
         } 

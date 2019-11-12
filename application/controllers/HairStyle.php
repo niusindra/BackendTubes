@@ -37,10 +37,9 @@ Class User extends REST_Controller{
             return $this->returnData($this->form_validation->error_array(), true); 
         } 
         $user = new UserData(); 
-        $user->full_name = $this->post('full_name'); 
+        $user->name = $this->post('name'); 
         $user->password = $this->post('password'); 
         $user->email = $this->post('email'); 
-        $user->verification = $this->post(0);
         if($id == null){ 
             $response = $this->UserModel->store($user);
         }else{ 
@@ -64,6 +63,5 @@ Class User extends REST_Controller{
 Class UserData{ 
     public $name; 
     public $password; 
-    public $email;
-    public $verification;
+    public $email; 
 }
