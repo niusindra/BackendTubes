@@ -1,17 +1,28 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
-class UserModel extends CI_Model 
+class BarberModel extends CI_Model 
 { 
-    private $table = 'users'; 
-    public $id; public $name; 
+    private $table = 'barbers'; 
+    public $id; 
+    public $name; 
     public $email; 
-    public $password; 
+    public $phone; 
     public $rule = [ 
         [ 
             'field' => 'name', 
             'label' => 'name', 
             'rules' => 'required' 
         ], 
+        [ 
+            'field' => 'email', 
+            'label' => 'email', 
+            'rules' => 'required' 
+        ],
+        [ 
+            'field' => 'phone', 
+            'label' => 'phone', 
+            'rules' => 'required' 
+        ],
     ]; 
     public function Rules() { return $this->rule; } 
     
@@ -22,14 +33,14 @@ class UserModel extends CI_Model
     public function store($request) { 
         $this->name = $request->name; 
         $this->email = $request->email; 
-        $this->password = password_hash($request->password, PASSWORD_BCRYPT); 
+        $this->phone = $request->phone; 
         if($this->db->insert($this->table, $this)){ 
             return ['msg'=>'Berhasil','error'=>false];
         } 
         return ['msg'=>'Gagal','error'=>true]; 
     } 
     public function update($request,$id) { 
-        $updateData = ['email' => $request->email, 'name' =>$request->name]; 
+        $updateData = ['email' => $request->email, 'name' =>$request->name, 'phone' =>$request->phone]; 
         if($this->db->where('id',$id)->update($this->table, $updateData)){ 
             return ['msg'=>'Berhasil','error'=>false]; 
         } 
