@@ -51,7 +51,7 @@ class HairStyleModel extends CI_Model
 
     private function _uploadImage()
     {
-        $config['upload_path']          = '../upload/hair_pict/';
+        $config['upload_path']          = './upload/hair_pict/';
         $config['allowed_types']        = 'gif|jpg|png';
         $config['file_name']            = $this->name;
         $config['overwrite']			= true;
@@ -61,9 +61,10 @@ class HairStyleModel extends CI_Model
 
         $this->load->library('upload', $config);
 
-        if ($this->upload->do_upload('image')) {
-            return $this->upload->data("name");
-        }else{
+        if ($this->upload->do_upload('hair_pict')) {
+            return $this->upload->data("file_name");
+        }
+        else{
             return "default.jpg";
         }
         

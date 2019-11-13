@@ -25,8 +25,7 @@ class UserModel extends CI_Model
     public function store($request) { 
         $this->full_name = $request->full_name; 
         $this->email = $request->email; 
-        $this->verified = $request->verified;
-        $this->profile_pict = $request->profile_pict;
+        $this->verified = 0;
         $this->password = password_hash($request->password, PASSWORD_BCRYPT);
         $this->profile_pict = $this->_uploadImage(); 
         if($this->db->insert($this->table, $this)){ 
@@ -58,7 +57,7 @@ class UserModel extends CI_Model
 
     private function _uploadImage()
     {
-        $config['upload_path']          = '../upload/profile_pict/';
+        $config['upload_path']          = './upload/profile_pict/';
         $config['allowed_types']        = 'gif|jpg|png';
         $config['file_name']            = $this->full_name;
         $config['overwrite']			= true;
@@ -68,7 +67,7 @@ class UserModel extends CI_Model
 
         $this->load->library('upload', $config);
 
-        if ($this->upload->do_upload('image')) {
+        if ($this->upload->do_upload('profile_pict')) {
             return $this->upload->data("file_name");
         }else{
             return "default.jpg";

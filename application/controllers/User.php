@@ -40,7 +40,7 @@ Class User extends REST_Controller{
         $user->full_name = $this->post('full_name'); 
         $user->password = $this->post('password'); 
         $user->email = $this->post('email'); 
-        $user->verification = $this->post(0);
+        $user->verified = $this->post('verified');
         if($id == null){ 
             $response = $this->UserModel->store($user);
         }else{ 
@@ -65,5 +65,5 @@ Class UserData{
     public $name; 
     public $password; 
     public $email;
-    public $verification;
+    public $verified;
 }
